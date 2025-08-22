@@ -1,0 +1,14 @@
+syntax = "proto3";
+package market.bazaar.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "market/x/bazaar/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "market/x/bazaar/Params";
+  option (gogoproto.equal) = true;
+  
+}
