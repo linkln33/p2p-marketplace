@@ -6,11 +6,8 @@ import (
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/depinject"
 	"cosmossdk.io/depinject/appconfig"
-	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	ibckeeper "github.com/cosmos/ibc-go/v10/modules/core/keeper"
-
 	"market/x/market/keeper"
 	"market/x/market/types"
 )
@@ -22,7 +19,7 @@ func (AppModule) IsOnePerModuleType() {}
 
 func init() {
 	appconfig.Register(
-	    &types.Module{},
+		&types.Module{},
 		appconfig.Provide(ProvideModule),
 	)
 }
@@ -37,15 +34,13 @@ type ModuleInputs struct {
 
 	AuthKeeper types.AuthKeeper
 	BankKeeper types.BankKeeper
-
-    
 }
 
 type ModuleOutputs struct {
 	depinject.Out
 
 	MarketKeeper keeper.Keeper
-	Module appmodule.AppModule
+	Module       appmodule.AppModule
 }
 
 func ProvideModule(in ModuleInputs) ModuleOutputs {

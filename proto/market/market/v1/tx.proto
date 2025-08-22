@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package market.market.v1;
 
 import "amino/amino.proto";
@@ -12,29 +13,84 @@ option go_package = "market/x/market/types";
 // Msg defines the Msg service.
 service Msg {
   option (cosmos.msg.v1.service) = true;
-
+  
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
-  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  
+  // CreateListing defines the CreateListing RPC.
+  rpc CreateListing (MsgCreateListing) returns (MsgCreateListingResponse);
+  
+  // UpdateListing defines the UpdateListing RPC.
+  rpc UpdateListing (MsgUpdateListing) returns (MsgUpdateListingResponse);
+  
+  // DeleteListing defines the DeleteListing RPC.
+  rpc DeleteListing (MsgDeleteListing) returns (MsgDeleteListingResponse);
 }
-
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
-  option (cosmos.msg.v1.signer) = "authority";
-  option (amino.name) = "market/x/market/MsgUpdateParams";
-
+  option (cosmos.msg.v1.signer) =                       "authority";
+  option           (amino.name) = "market/x/market/MsgUpdateParams";
+  
   // authority is the address that controls the module (defaults to x/gov unless overwritten).
   string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 
   // params defines the module parameters to update.
-  //
+  
   // NOTE: All parameters must be supplied.
-  Params params = 2 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
 // MsgUpdateParamsResponse defines the response structure for executing a
 // MsgUpdateParams message.
 message MsgUpdateParamsResponse {}
+
+// MsgCreateListing defines the MsgCreateListing message.
+message MsgCreateListing {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator     =  1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string seller      =  2;
+  string title       =  3;
+  string description =  4;
+  int64  price       =  5;
+  string denom       =  6;
+  string status      =  7;
+  string buyer       =  8;
+  int64  created_at  =  9;
+  int64  expires_at  = 10;
+}
+
+// MsgCreateListingResponse defines the MsgCreateListingResponse message.
+message MsgCreateListingResponse {
+  uint64 id = 1;
+}
+
+// MsgUpdateListing defines the MsgUpdateListing message.
+message MsgUpdateListing {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator     =  1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  uint64 id          =  2;
+  string seller      =  3;
+  string title       =  4;
+  string description =  5;
+  int64  price       =  6;
+  string denom       =  7;
+  string status      =  8;
+  string buyer       =  9;
+  int64  created_at  = 10;
+  int64  expires_at  = 11;
+}
+
+// MsgUpdateListingResponse defines the MsgUpdateListingResponse message.
+message MsgUpdateListingResponse {}
+
+// MsgDeleteListing defines the MsgDeleteListing message.
+message MsgDeleteListing {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  uint64 id      = 2;
+}
+
+// MsgDeleteListingResponse defines the MsgDeleteListingResponse message.
+message MsgDeleteListingResponse {}
+

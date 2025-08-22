@@ -1,17 +1,20 @@
 syntax = "proto3";
+
 package market.market.v1;
 
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "market/market/v1/params.proto";
+import "market/market/v1/listing.proto";
 
 option go_package = "market/x/market/types";
 
 // GenesisState defines the market module's genesis state.
 message GenesisState {
+  
   // params defines all the parameters of the module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+           Params  params        = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Listing listing_list  = 2 [(gogoproto.nullable) = false];
+           uint64  listing_count = 3;
 }
+

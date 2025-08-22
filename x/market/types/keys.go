@@ -21,3 +21,8 @@ const (
 
 // ParamsKey is the prefix to retrieve all Params
 var ParamsKey = collections.NewPrefix("p_market")
+
+var (
+    ListingKey     = collections.NewPrefix("listing/value/")
+    ListingCountKey = collections.NewPrefix("listing/count/")
+)

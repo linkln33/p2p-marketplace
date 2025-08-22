@@ -2,15 +2,10 @@ package types
 
 import (
 	"context"
-
-	
-	
-    sdk "github.com/cosmos/cosmos-sdk/types"
+	"cosmossdk.io/core/address"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-
-    
-    
 
     
     

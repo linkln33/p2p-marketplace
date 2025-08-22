@@ -17,7 +17,31 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module",
 				},
-				// this line is used by ignite scaffolding # autocli/query
+				{
+			RpcMethod: "ListListing",
+			Use: "list-listing",
+			Short: "List all listing",
+		},
+		{
+			RpcMethod: "GetListing",
+			Use: "get-listing [id]",
+			Short: "Gets a listing by id",
+			Alias: []string{"show-listing"},
+			PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+		},
+		{
+			RpcMethod: "ListListing",
+			Use: "list-listing",
+			Short: "List all listing",
+		},
+		{
+			RpcMethod: "GetListing",
+			Use: "get-listing [id]",
+			Short: "Gets a listing by id",
+			Alias: []string{"show-listing"},
+			PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+		},
+		// this line is used by ignite scaffolding # autocli/query
 			},
 		},
 		Tx: &autocliv1.ServiceCommandDescriptor{
@@ -28,7 +52,43 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					RpcMethod: "UpdateParams",
 					Skip:       true, // skipped because authority gated
 				},
-				// this line is used by ignite scaffolding # autocli/tx
+				{
+			RpcMethod: "CreateListing",
+			Use: "create-listing [seller] [title] [description] [price] [denom] [status] [buyer] [created-at] [expires-at]",
+			Short: "Create listing",
+			PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "seller"}, {ProtoField: "title"}, {ProtoField: "description"}, {ProtoField: "price"}, {ProtoField: "denom"}, {ProtoField: "status"}, {ProtoField: "buyer"}, {ProtoField: "created_at"}, {ProtoField: "expires_at"}},
+		},
+		{
+			RpcMethod: "UpdateListing",
+			Use: "update-listing [id] [seller] [title] [description] [price] [denom] [status] [buyer] [created-at] [expires-at]",
+			Short: "Update listing",
+			PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}, {ProtoField: "seller"}, {ProtoField: "title"}, {ProtoField: "description"}, {ProtoField: "price"}, {ProtoField: "denom"}, {ProtoField: "status"}, {ProtoField: "buyer"}, {ProtoField: "created_at"}, {ProtoField: "expires_at"}},
+		},
+		{
+			RpcMethod: "DeleteListing",
+			Use: "delete-listing [id]",
+			Short: "Delete listing",
+			PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+		},
+		{
+			RpcMethod: "CreateListing",
+			Use: "create-listing [seller] [title]",
+			Short: "Create listing",
+			PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "seller"}, {ProtoField: "title"}},
+		},
+		{
+			RpcMethod: "UpdateListing",
+			Use: "update-listing [id] [seller] [title]",
+			Short: "Update listing",
+			PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}, {ProtoField: "seller"}, {ProtoField: "title"}},
+		},
+		{
+			RpcMethod: "DeleteListing",
+			Use: "delete-listing [id]",
+			Short: "Delete listing",
+			PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+		},
+		// this line is used by ignite scaffolding # autocli/tx
 			},
 		},
 	}

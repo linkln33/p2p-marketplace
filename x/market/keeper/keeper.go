@@ -7,7 +7,6 @@ import (
 	"cosmossdk.io/core/address"
 	corestore "cosmossdk.io/core/store"
 	"github.com/cosmos/cosmos-sdk/codec"
-	 
 
 	"market/x/market/types"
 )
@@ -20,10 +19,10 @@ type Keeper struct {
 	// Typically, this should be the x/gov module account.
 	authority []byte
 
-	Schema collections.Schema
-	Params collections.Item[types.Params]
-    
-	
+	Schema     collections.Schema
+	Params     collections.Item[types.Params]
+	ListingSeq collections.Sequence
+	Listing    collections.Map[uint64, types.Listing]
 }
 
 func NewKeeper(
@@ -31,7 +30,7 @@ func NewKeeper(
 	cdc codec.Codec,
 	addressCodec address.Codec,
 	authority []byte,
-    
+
 ) Keeper {
 	if _, err := addressCodec.BytesToString(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address %s: %s", authority, err))
@@ -44,10 +43,11 @@ func NewKeeper(
 		cdc:          cdc,
 		addressCodec: addressCodec,
 		authority:    authority,
-		
-		Params:       collections.NewItem(sb, types.ParamsKey, "params", codec.CollValue[types.Params](cdc)),
-	}
 
+		Params:     collections.NewItem(sb, types.ParamsKey, "params", codec.CollValue[types.Params](cdc)),
+		Listing:    collections.NewMap(sb, types.ListingKey, "listing", collections.Uint64Key, codec.CollValue[types.Listing](cdc)),
+		ListingSeq: collections.NewSequence(sb, types.ListingCountKey, "listingSequence"),
+	}
 	schema, err := sb.Build()
 	if err != nil {
 		panic(err)

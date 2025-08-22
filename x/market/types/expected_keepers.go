@@ -2,13 +2,9 @@ package types
 
 import (
 	"context"
-
-	
-	
-    sdk "github.com/cosmos/cosmos-sdk/types"
+	"cosmossdk.io/core/address"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
-
-
 
 // AuthKeeper defines the expected interface for the Auth module.
 type AuthKeeper interface {

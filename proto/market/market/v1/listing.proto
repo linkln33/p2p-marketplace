@@ -1,0 +1,18 @@
+syntax = "proto3";
+package market.market.v1;
+
+option go_package = "market/x/market/types";
+
+// Listing defines the Listing message.
+message Listing {
+  uint64 id         = 1;
+  string seller     = 2;
+  string title      = 3;
+  string description= 4;
+  int64  price      = 5;
+  string denom      = 6;
+  string status     = 7;
+  string buyer      = 8;
+  int64  created_at = 9;
+  int64  expires_at = 10;
+}

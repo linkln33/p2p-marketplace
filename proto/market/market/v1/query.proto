@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package market.market.v1;
 
 import "amino/amino.proto";
@@ -6,25 +7,57 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "market/market/v1/params.proto";
+import "market/market/v1/listing.proto";
 
 option go_package = "market/x/market/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/market/market/v1/params";
+  
+  }
+  
+  // GetListing queries a single Listing by id.
+  rpc GetListing (QueryGetListingRequest) returns (QueryGetListingResponse) {
+    option (google.api.http).get = "/market/market/v1/listing/{id}";
+  }
+  
+  // ListListing returns a paginated list of listings.
+  rpc ListListing (QueryAllListingRequest) returns (QueryAllListingResponse) {
+    option (google.api.http).get = "/market/market/v1/listing";
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
+
+// QueryGetListingRequest defines the QueryGetListingRequest message.
+message QueryGetListingRequest {
+  uint64 id = 1;
+}
+
+// QueryGetListingResponse defines the QueryGetListingResponse message.
+message QueryGetListingResponse {
+  Listing listing = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryAllListingRequest defines the QueryAllListingRequest message.
+message QueryAllListingRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+// QueryAllListingResponse defines the QueryAllListingResponse message.
+message QueryAllListingResponse {
+  repeated Listing                                listing    = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
